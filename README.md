@@ -2,7 +2,7 @@
 A compact javascript library for creating an image gallery.
 
 - [x] Capture all images
-- [ ] Images should expand on click
+- [x] Images should expand on click
 - [ ] Images should collapse on "esc"
 - [ ] Gallery should move left/right on ←/→
 - [ ] Gallery should cycle to beginning from end, and vice versa
@@ -17,5 +17,5 @@ A compact javascript library for creating an image gallery.
 Creating a gallery
 
 ```javascript
-firstGallery = new Gallery(".image-group-1");
+var firstGallery = new Gallery("image-group-1");
 ```
