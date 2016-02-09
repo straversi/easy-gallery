@@ -1,7 +1,7 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
-- [ ] Capture all images
+- [x] Capture all images
 - [ ] Images should expand on click
 - [ ] Images should collapse on "esc"
 - [ ] Gallery should move left/right on ←/→
