@@ -1,7 +1,7 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
-- [ ] Capture all images + window dimensions
+- [ ] Capture all images
 - [ ] Images should expand on click
 - [ ] Images should collapse on "esc"
 - [ ] Gallery should move left/right on ←/→
@@ -11,3 +11,11 @@ A compact javascript library for creating an image gallery.
 - [ ] Display comments
 - [ ] Images outside of full-screen mode should be thumbnails
   - [ ] Imgur API
+
+## Usage
+
+Creating a gallery
+
+```javascript
+firstGallery = new Gallery(".image-group-1");
+```
