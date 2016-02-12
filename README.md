@@ -6,7 +6,7 @@ A compact javascript library for creating an image gallery.
 - [x] Images should collapse on "esc"
 - [x] Images should not clip off window and should preserve aspect ratio
   - [ ] Should maintain across window resizes
-- [ ] Images should be vertically centered
+- [x] Images should be vertically centered
   - [ ] Should maintain across window resizes
 - [ ] Gallery should cycle left/right on ←/→
 - [ ] Gallery should cycle to beginning from end, and vice versa

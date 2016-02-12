@@ -43,21 +43,38 @@ Gallery.prototype.createSelf = function() {
   element.style.top = "0";
   element.style.width = "100%";
   element.style.height = "100%";
-  element.style.background = "rgba(0,0,0,0.5)";
+  element.style.background = "rgba(0,0,0,0.7)";
   element.style.textAlign = "center";
   document.body.appendChild(element);
   this.galleryElement = element;
   var imgSource = this.images[this.state].src;
+  var img = createImage(imgSource);
+  img.style.position = "relative";
+  resizeImage(img);
+  element.appendChild(img);
+}
+
+function createImage(source) {
   var img = document.createElement('img');
-  img.src = imgSource;
+  img.src = source;
+  img.id = "1";
+  return img;
+}
+
+function resizeImage(img) {
   if (useFullHeight(img)) {
     img.style.height = "100%";
     img.style.width = "auto";
+    img.style.transform = "";
+    img.style.top = "";
+    // img.style.left = "";
   } else {
     img.style.width = "100%";
     img.style.height = "auto";
+    img.style.transform = "translateY(-50%)";
+    img.style.top = "50%";
+    // img.style.left = "0";
   }
-  element.appendChild(img);
 }
 
 Gallery.prototype.showSelf = function() {
@@ -72,13 +89,7 @@ Gallery.prototype.getImageAndShow = function() {
   img = this.galleryElement.getElementsByTagName('img')[0];
   var imgSource = this.images[this.state].src;
   img.src = imgSource;
-  if (useFullHeight(img)) {
-    img.style.height = "100%";
-    img.style.width = "auto";
-  } else {
-    img.style.width = "100%";
-    img.style.height = "auto";
-  }
+  resizeImage(img)
   this.showSelf();
 }
 
