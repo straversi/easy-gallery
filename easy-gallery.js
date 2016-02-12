@@ -5,6 +5,7 @@ var Gallery = function(className) {
   this.images = document.getElementsByClassName(className);
   this.state = -1;
   this.galleryElement = false;
+  this.img = 0;
 
   // this.onclick = this.toggleOn()
   for (var i = 0, img; img = this.images[i]; i++) {
@@ -19,6 +20,29 @@ var Gallery = function(className) {
     if (e.keyCode == 27) {
       gallery.toggleOff();
     }
+  });
+
+  ;(function() {
+      var throttle = function(type, name, obj) {
+          obj = obj || window;
+          var running = false;
+          var func = function() {
+              if (running) { return; }
+              running = true;
+               requestAnimationFrame(function() {
+                  obj.dispatchEvent(new CustomEvent(name));
+                  running = false;
+              });
+          };
+          obj.addEventListener(type, func);
+      };
+
+      /* init - you can init any event */
+      throttle("resize", "optimizedResize");
+  })();
+  var gallery = this;
+  window.addEventListener("optimizedResize", function() {
+    resizeImage(gallery.img);
   });
 }
 
@@ -50,8 +74,10 @@ Gallery.prototype.createSelf = function() {
   var imgSource = this.images[this.state].src;
   var img = createImage(imgSource);
   img.style.position = "relative";
+  img.style.objectFit = "contain";
   resizeImage(img);
   element.appendChild(img);
+  this.img = img;
 }
 
 function createImage(source) {
@@ -62,15 +88,16 @@ function createImage(source) {
 }
 
 function resizeImage(img) {
+  // width and heights are backups for img.objectFit = 'contain'.
   if (useFullHeight(img)) {
     img.style.height = "100%";
-    img.style.width = "auto";
+    img.style.width = "";
     img.style.transform = "";
     img.style.top = "";
     // img.style.left = "";
   } else {
     img.style.width = "100%";
-    img.style.height = "auto";
+    img.style.height = "";
     img.style.transform = "translateY(-50%)";
     img.style.top = "50%";
     // img.style.left = "0";
@@ -86,17 +113,18 @@ Gallery.prototype.hideSelf = function() {
 }
 
 Gallery.prototype.getImageAndShow = function() {
-  img = this.galleryElement.getElementsByTagName('img')[0];
+  // img = this.galleryElement.getElementsByTagName('img')[0];
+  var img = this.img;
   var imgSource = this.images[this.state].src;
   img.src = imgSource;
-  resizeImage(img)
+  resizeImage(img);
   this.showSelf();
 }
 
 function useFullHeight(img) {
-  imgW = img.width;
-  imgH = img.height;
-  windowW = window.innerWidth;
-  windowH = window.innerHeight;
+  var imgW = img.width;
+  var imgH = img.height;
+  var windowW = window.innerWidth;
+  var windowH = window.innerHeight;
   return (imgW / imgH < windowW / windowH);
 }
