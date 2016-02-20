@@ -3,6 +3,7 @@
 var Gallery = function(className) {
   this.className = className;
   this.images = document.getElementsByClassName(className);
+  this.size = this.images.length;
   this.state = -1;
   this.galleryElement = false;
   this.img = 0;
@@ -15,10 +16,17 @@ var Gallery = function(className) {
     }(i));
   }
 
-  window.addEventListener("keypress", function(e) {
-    // escape
-    if (e.keyCode == 27) {
-      gallery.toggleOff();
+  window.addEventListener("keydown", function(e) {
+    switch (e.keyCode) {
+      case 27: // escape
+        gallery.toggleOff();
+        break;
+      case 37: // left arrow
+        gallery.cycle(-1);
+        break;
+      case 39: // right arrow
+        gallery.cycle(1);
+        break;
     }
   });
 
@@ -58,6 +66,12 @@ Gallery.prototype.toggleOn = function(state) {
 Gallery.prototype.toggleOff = function() {
   this.state = -1;
   this.hideSelf();
+};
+
+Gallery.prototype.cycle = function(n) {
+  // takes care of negative % problem
+  this.state = ((this.state + this.size) + n) % this.size
+  this.getImageAndShow();
 };
 
 Gallery.prototype.createSelf = function() {
@@ -118,7 +132,9 @@ Gallery.prototype.getImageAndShow = function() {
   var imgSource = this.images[this.state].src;
   img.src = imgSource;
   resizeImage(img);
-  this.showSelf();
+  if (this.galleryElement.style.display != "block") {
+    this.showSelf();
+  }
 }
 
 function useFullHeight(img) {
