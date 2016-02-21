@@ -10,8 +10,8 @@ A compact javascript library for creating an image gallery.
   - [x] Should maintain across window resizes
 - [x] Gallery should cycle left/right on ←/→
 - [x] Gallery should cycle to beginning from end, and vice versa
-- [ ] Gallery should collapse on press of "X" icon
-- [ ] Gallery should move left/right on tap of hit boxes
+- [x] Gallery should collapse on press of "X" icon
+- [x] Gallery should move left/right on tap of hit boxes
 - [ ] Display comments
 - [ ] Images outside of full-screen mode should be thumbnails
   - [ ] Imgur API

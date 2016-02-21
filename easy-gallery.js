@@ -7,6 +7,7 @@ var Gallery = function(className) {
   this.state = -1;
   this.galleryElement = false;
   this.img = 0;
+  this.buttonSize = 30;
 
   // this.onclick = this.toggleOn()
   for (var i = 0, img; img = this.images[i]; i++) {
@@ -92,6 +93,17 @@ Gallery.prototype.createSelf = function() {
   resizeImage(img);
   element.appendChild(img);
   this.img = img;
+  // Click handling
+  var gallery = this; // Use gallery over 'this' in click handlers
+  var leftArrow  = createArrow('left', this.buttonSize);
+  var rightArrow = createArrow('right', this.buttonSize);
+  var x          = createX(this.buttonSize);
+  x.onclick          = (function(gallery) { return function() {gallery.toggleOff();} }(gallery));
+  leftArrow.onclick  = (function(gallery) { return function() {gallery.cycle(-1);} }(gallery));
+  rightArrow.onclick = (function(gallery) { return function() {gallery.cycle(1);} }(gallery));
+  element.appendChild(leftArrow);
+  element.appendChild(rightArrow);
+  element.appendChild(x);
 }
 
 function createImage(source) {
@@ -99,6 +111,28 @@ function createImage(source) {
   img.src = source;
   img.id = "1";
   return img;
+}
+
+// Create an arrow element with DIRECTION [left, right]
+function createArrow(direction, size) {
+  var arrow = document.createElement('img');
+  arrow.style.width = size + "px";
+  arrow.style.position = "absolute";
+  arrow.style.transform = "translateY(-50%)";
+  arrow.style.top = "50%";
+  arrow.style[direction] = 0;
+  arrow.src = "svg/" + direction + "-arrow.svg"
+  return arrow;
+}
+function createX(size) {
+  var x = document.createElement('img');
+  x.style.width = size + "px";
+  x.style.position = "absolute";
+  x.style.top = "0";
+  x.style.left = "0";
+  x.style.transform = "translate(12.5%, 12.5%)";
+  x.src = "svg/x.svg";
+  return x;
 }
 
 function resizeImage(img) {
