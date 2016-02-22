@@ -1,6 +1,25 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
+## Usage
+
+Creating a gallery
+
+The parameter `true` in the constructor specifies that I'm taking advantage of Imgur's url sizing format.
+
+Imgur's styling format means that in my markup, I include a `b` at the end of each image URL. Imgur serves a thumbnail. Easy-gallery will include remove the `b` when an image is expanded, loading the full size image.
+```javascript
+var firstGallery = new Gallery("image-group-1", true);
+```
+```html
+<img class='image-group-1' src='http://i.imgur.com/3gBHbzEb.png'>
+<img class='image-group-1' src='http://i.imgur.com/PvHMW7fb.png'>
+<img class='image-group-1' src='http://i.imgur.com/Lwxrv1db.png'>
+<img class='image-group-1' src='http://i.imgur.com/Y8ufw56b.png'>
+```
+
+## Development
+
 - [x] Capture all images
 - [x] Images should expand on click
 - [x] Images should collapse on "esc"
@@ -15,12 +34,4 @@ A compact javascript library for creating an image gallery.
 - [ ] Display comments
 - [x] Images outside of full-screen mode should be thumbnails
   - [x] Imgur API
-- [ ] README documentation
-
-## Usage
-
-Creating a gallery
-
-```javascript
-var firstGallery = new Gallery("image-group-1");
-```
+- [x] README documentation
