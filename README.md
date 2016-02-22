@@ -1,9 +1,9 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
-## Usage
+Size: 3.1KB
 
-Creating a gallery
+## Usage
 
 The parameter `true` in the constructor specifies that I'm taking advantage of Imgur's url sizing format.
 
