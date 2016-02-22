@@ -15,6 +15,7 @@ A compact javascript library for creating an image gallery.
 - [ ] Display comments
 - [x] Images outside of full-screen mode should be thumbnails
   - [x] Imgur API
+- [ ] README documentation
 
 ## Usage
 
