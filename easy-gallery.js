@@ -1,13 +1,14 @@
 // Gallery representing a group of images
 // this.state = -1 when Gallery is off, (+) when Gallery is on.
-var Gallery = function(className) {
+var Gallery = function(className, imgurThumbnailFormat) {
   this.className = className;
   this.images = document.getElementsByClassName(className);
   this.size = this.images.length;
   this.state = -1;
   this.galleryElement = false;
-  this.img = 0;
+  this.imgElement = 0;
   this.buttonSize = 30;
+  this.imgurThumbnailFormat = imgurThumbnailFormat;
 
   // this.onclick = this.toggleOn()
   for (var i = 0, img; img = this.images[i]; i++) {
@@ -29,29 +30,6 @@ var Gallery = function(className) {
         gallery.cycle(1);
         break;
     }
-  });
-
-  ;(function() {
-      var throttle = function(type, name, obj) {
-          obj = obj || window;
-          var running = false;
-          var func = function() {
-              if (running) { return; }
-              running = true;
-               requestAnimationFrame(function() {
-                  obj.dispatchEvent(new CustomEvent(name));
-                  running = false;
-              });
-          };
-          obj.addEventListener(type, func);
-      };
-
-      /* init - you can init any event */
-      throttle("resize", "optimizedResize");
-  })();
-  var gallery = this;
-  window.addEventListener("optimizedResize", function() {
-    resizeImage(gallery.img);
   });
 }
 
@@ -86,13 +64,31 @@ Gallery.prototype.createSelf = function() {
   element.style.textAlign = "center";
   document.body.appendChild(element);
   this.galleryElement = element;
-  var imgSource = this.images[this.state].src;
-  var img = createImage(imgSource);
-  img.style.position = "relative";
-  img.style.objectFit = "contain";
-  resizeImage(img);
-  element.appendChild(img);
-  this.img = img;
+  this.imgElement = createImageElement();
+  element.appendChild(this.imgElement);
+  // Resize handling
+  ;(function() {
+      var throttle = function(type, name, obj) {
+          obj = obj || window;
+          var running = false;
+          var func = function() {
+              if (running) { return; }
+              running = true;
+               requestAnimationFrame(function() {
+                  obj.dispatchEvent(new CustomEvent(name));
+                  running = false;
+              });
+          };
+          obj.addEventListener(type, func);
+      };
+
+      /* init - you can init any event */
+      throttle("resize", "optimizedResize");
+  })();
+  var gallery = this;
+  window.addEventListener("optimizedResize", function() {
+    resizeImage(gallery.imgElement);
+  });
   // Click handling
   var gallery = this; // Use gallery over 'this' in click handlers
   var leftArrow  = createArrow('left', this.buttonSize);
@@ -104,12 +100,13 @@ Gallery.prototype.createSelf = function() {
   element.appendChild(leftArrow);
   element.appendChild(rightArrow);
   element.appendChild(x);
+  this.getImageAndShow();
 }
 
-function createImage(source) {
+function createImageElement() {
   var img = document.createElement('img');
-  img.src = source;
-  img.id = "1";
+  img.style.position = "relative";
+  img.style.objectFit = "contain";
   return img;
 }
 
@@ -162,10 +159,19 @@ Gallery.prototype.hideSelf = function() {
 
 Gallery.prototype.getImageAndShow = function() {
   // img = this.galleryElement.getElementsByTagName('img')[0];
-  var img = this.img;
-  var imgSource = this.images[this.state].src;
-  img.src = imgSource;
-  resizeImage(img);
+  var img = this.imgElement;
+  img.onload = function() {
+    resizeImage(img);
+  }
+  var thumbnailSource = this.images[this.state].src;
+  if (this.imgurThumbnailFormat) {
+    var re = /^(.+)b\.(jpg|png)$/;
+    var result = thumbnailSource.match(re);
+    var fullSizeSource = result[1] + "." + result[2]; // removes the "b" for thumbnail
+    img.src = fullSizeSource;
+  } else {
+    img.src = thumbnailSource;
+  }
   if (this.galleryElement.style.display != "block") {
     this.showSelf();
   }
