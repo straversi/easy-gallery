@@ -1,6 +1,6 @@
 // Gallery representing a group of images
 // this.state = -1 when Gallery is off, (+) when Gallery is on.
-var Gallery = function(className, imgurThumbnailFormat=false) {
+var Gallery = function(className, imgurThumbnailFormat) {
   this.className = className;
   this.images = document.getElementsByClassName(className);
   this.size = this.images.length;
