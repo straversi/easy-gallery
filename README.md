@@ -1,7 +1,7 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
-Size: 3.1KB
+Size: 3.3KB
 
 ## Usage
 
@@ -27,7 +27,7 @@ var firstGallery = new Gallery("image-group-1", true);
   - [x] Should maintain across window resizes
 - [x] Images should be vertically centered
   - [x] Should maintain across window resizes
-- [ ] Gallery should maintain padding between edges and images
+- [x] Gallery should maintain padding between edges and images
   - [ ] But should removed padding on smaller window sizes
 - [x] Gallery should cycle left/right on ←/→
 - [x] Gallery should cycle to beginning from end, and vice versa

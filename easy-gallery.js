@@ -9,6 +9,7 @@ var Gallery = function(className, imgurThumbnailFormat) {
   this.imgElement = 0;
   this.buttonSize = 30;
   this.imgurThumbnailFormat = imgurThumbnailFormat;
+  this.padding = "20px";
 
   // this.onclick = this.toggleOn()
   for (var i = 0, img; img = this.images[i]; i++) {
@@ -58,14 +59,21 @@ Gallery.prototype.createSelf = function() {
   element.style.position = "fixed";
   element.style.left = "0";
   element.style.top = "0";
-  element.style.width = "100%";
-  element.style.height = "100%";
+  element.style.right = "0";
+  element.style.bottom = "0";
+  element.style.padding = this.padding;
   element.style.background = "rgba(0,0,0,0.7)";
   element.style.textAlign = "center";
   document.body.appendChild(element);
   this.galleryElement = element;
+
+  var imageContainer = document.createElement('div');
+  imageContainer.style.width = "100%";
+  imageContainer.style.height = "100%";
+  element.appendChild(imageContainer);
+
   this.imgElement = createImageElement();
-  element.appendChild(this.imgElement);
+  imageContainer.appendChild(this.imgElement);
   // Resize handling
   ;(function() {
       var throttle = function(type, name, obj) {
@@ -139,13 +147,11 @@ function resizeImage(img) {
     img.style.width = "";
     img.style.transform = "";
     img.style.top = "";
-    // img.style.left = "";
   } else {
     img.style.width = "100%";
     img.style.height = "";
     img.style.transform = "translateY(-50%)";
     img.style.top = "50%";
-    // img.style.left = "0";
   }
 }
 
