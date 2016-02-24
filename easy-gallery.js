@@ -58,6 +58,7 @@ Gallery.prototype.cycle = function(n) {
 Gallery.prototype.createSelf = function() {
   var element = document.createElement('div');
   element.className += "easy-gallery";
+  element.id = "gallery-main";
   element.style.position = "fixed";
   element.style.left = "0";
   element.style.top = "0";
@@ -65,17 +66,19 @@ Gallery.prototype.createSelf = function() {
   element.style.bottom = "0";
   element.style.padding = this.padding;
   document.querySelector('style').textContent += "@media screen and (max-width:" + this.smallWidth + ") { .easy-gallery { padding: 0 !important; }}"
-  element.style.background = "rgba(0,0,0,0.7)";
+  element.style.background = "rgba(0,0,0,0.9)";
   element.style.textAlign = "center";
   document.body.appendChild(element);
   this.galleryElement = element;
 
   var imageContainer = document.createElement('div');
+  imageContainer.id = "gallery-image-container";
   imageContainer.style.width = "100%";
   imageContainer.style.height = "100%";
   element.appendChild(imageContainer);
 
   this.imgElement = createImageElement();
+  this.imgElement.id = "gallery-image-main";
   imageContainer.appendChild(this.imgElement);
   // Resize handling
   ;(function() {
@@ -100,14 +103,33 @@ Gallery.prototype.createSelf = function() {
   window.addEventListener("optimizedResize", function() {
     resizeImage(gallery.imgElement);
   });
-  // Click handling
   var gallery = this; // Use gallery over 'this' in click handlers
   var leftArrow  = createArrow('left', this.buttonSize);
   var rightArrow = createArrow('right', this.buttonSize);
   var x          = createX(this.buttonSize);
-  x.onclick          = (function(gallery) { return function() {gallery.toggleOff();} }(gallery));
-  leftArrow.onclick  = (function(gallery) { return function() {gallery.cycle(-1);} }(gallery));
-  rightArrow.onclick = (function(gallery) { return function() {gallery.cycle(1);} }(gallery));
+  leftArrow.id = "gallery-left-arrow";
+  rightArrow.id = "gallery-right-arrow";
+  x.id = "gallery-x";
+  element.onclick = function(e) {
+    e = e || event;
+    var target = e.target || e.srcElement;
+    switch (target.id) {
+      case "gallery-main":
+      case "gallery-image-container":
+      case "gallery-x":
+        gallery.toggleOff();
+        break;
+      case "gallery-left-arrow":
+        gallery.cycle(-1);
+        break;
+      case "gallery-right-arrow":
+        gallery.cycle(1);
+        break;
+      case "gallery-image-main":
+        window.open(target.src);
+        break;
+    }
+  };
   element.appendChild(leftArrow);
   element.appendChild(rightArrow);
   element.appendChild(x);

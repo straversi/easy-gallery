@@ -1,7 +1,7 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
-Size: 3.3KB
+Size: 3.7KB
 
 ## Usage
 
@@ -31,7 +31,7 @@ var firstGallery = new Gallery("image-group-1", true);
   - [x] But should remove padding on smaller window sizes
 - [x] Gallery should cycle left/right on ←/→
 - [x] Gallery should cycle to beginning from end, and vice versa
-- [ ] Gallery should collapse on press of "X" icon or click outside of image box
+- [x] Gallery should collapse on press of "X" icon or click outside of image box
 - [x] Gallery should move left/right on tap of hit boxes
 - [ ] Display comments
 - [x] Images outside of full-screen mode should be thumbnails
