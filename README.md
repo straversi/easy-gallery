@@ -28,7 +28,7 @@ var firstGallery = new Gallery("image-group-1", true);
 - [x] Images should be vertically centered
   - [x] Should maintain across window resizes
 - [x] Gallery should maintain padding between edges and images
-  - [ ] But should removed padding on smaller window sizes
+  - [x] But should remove padding on smaller window sizes
 - [x] Gallery should cycle left/right on ←/→
 - [x] Gallery should cycle to beginning from end, and vice versa
 - [x] Gallery should collapse on press of "X" icon

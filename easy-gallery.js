@@ -10,6 +10,7 @@ var Gallery = function(className, imgurThumbnailFormat) {
   this.buttonSize = 30;
   this.imgurThumbnailFormat = imgurThumbnailFormat;
   this.padding = "20px";
+  this.smallWidth = "500px";
 
   // this.onclick = this.toggleOn()
   for (var i = 0, img; img = this.images[i]; i++) {
@@ -56,12 +57,14 @@ Gallery.prototype.cycle = function(n) {
 
 Gallery.prototype.createSelf = function() {
   var element = document.createElement('div');
+  element.className += "easy-gallery";
   element.style.position = "fixed";
   element.style.left = "0";
   element.style.top = "0";
   element.style.right = "0";
   element.style.bottom = "0";
   element.style.padding = this.padding;
+  document.querySelector('style').textContent += "@media screen and (max-width:" + this.smallWidth + ") { .easy-gallery { padding: 0 !important; }}"
   element.style.background = "rgba(0,0,0,0.7)";
   element.style.textAlign = "center";
   document.body.appendChild(element);
