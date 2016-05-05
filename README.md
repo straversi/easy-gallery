@@ -3,6 +3,8 @@ A compact javascript library for creating an image gallery.
 
 Size: 3.7KB
 
+The aim is extreme simplicity. To have a working gallery, include the script `easy-gallery-min.js`, give each image you want in a gallery a custom class, and include a single line of javascript to set everything up. That's it. It's not big, ugly, or in your way.
+
 ## Usage
 
 The parameter `true` in the constructor specifies that I'm taking advantage of Imgur's url sizing format.
@@ -36,4 +38,6 @@ var firstGallery = new Gallery("image-group-1", true);
 - [ ] Display comments
 - [x] Images outside of full-screen mode should be thumbnails
   - [x] Imgur API
+  - [ ] Smooth loading
 - [x] README documentation
+- [ ] Optimized for mobile
