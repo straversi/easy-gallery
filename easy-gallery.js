@@ -1,9 +1,10 @@
 // Gallery representing a group of images
 // this.state = -1 when Gallery is off, (+) when Gallery is on.
-var Gallery = function(className, imgurThumbnailFormat) {
+var Gallery = function(className, imgurThumbnailFormat, assetPath) {
   this.className = className;
   this.images = document.getElementsByClassName(className);
   this.size = this.images.length;
+  this.assetPath = assetPath;
   this.state = -1;
   this.galleryElement = false;
   this.imgElement = 0;
@@ -66,7 +67,15 @@ Gallery.prototype.createSelf = function() {
   element.style.right = "0";
   element.style.bottom = "0";
   element.style.padding = this.padding;
-  document.querySelector('style').textContent += "@media screen and (max-width:" + this.smallWidth + ") { .easy-gallery { padding: 0 !important; }}"
+  var theCSS = "@media screen and (max-width:" + this.smallWidth + ") { .easy-gallery { padding: 0 !important; }}";
+  if (document.querySelector('style')) {
+    document.querySelector('style').textContent += theCSS;
+  } else {
+    var head = document.head || document.getElementsByTagName('head')[0];
+    var style = document.createElement('style');
+    style.appendChild(document.createTextNode(theCSS));
+    head.appendChild(style);
+  }
   element.style.background = "rgba(0,0,0,0.9)";
   element.style.textAlign = "center";
   document.body.appendChild(element);
@@ -88,7 +97,7 @@ Gallery.prototype.createSelf = function() {
   caption.style.bottom = "0";
   caption.style.left = "0";
   caption.style.width = "100%";
-  caption.style.height = "38px";
+  // caption.style.height = "38px";
   this.captionElement = caption;
   element.appendChild(caption);
 
@@ -119,9 +128,9 @@ Gallery.prototype.createSelf = function() {
     resizeImage(gallery.imgElement);
   });
   var gallery = this; // Use gallery over 'this' in click handlers
-  var leftArrow  = createArrow('left', this.buttonSize);
-  var rightArrow = createArrow('right', this.buttonSize);
-  var x          = createX(this.buttonSize);
+  var leftArrow  = createArrow('left', this.buttonSize, this.assetPath);
+  var rightArrow = createArrow('right', this.buttonSize, this.assetPath);
+  var x          = createX(this.buttonSize, this.assetPath);
   leftArrow.id = "gallery-left-arrow";
   rightArrow.id = "gallery-right-arrow";
   x.id = "gallery-x";
@@ -159,24 +168,24 @@ function createImageElement() {
 }
 
 // Create an arrow element with DIRECTION [left, right]
-function createArrow(direction, size) {
+function createArrow(direction, size, assetPath) {
   var arrow = document.createElement('img');
   arrow.style.width = size + "px";
   arrow.style.position = "absolute";
   arrow.style.transform = "translateY(-50%)";
   arrow.style.top = "50%";
   arrow.style[direction] = 0;
-  arrow.src = "svg/" + direction + "-arrow.svg"
+  arrow.src = assetPath + direction + "-arrow.svg"
   return arrow;
 }
-function createX(size) {
+function createX(size, assetPath) {
   var x = document.createElement('img');
   x.style.width = size + "px";
   x.style.position = "absolute";
   x.style.top = "0";
   x.style.left = "0";
   x.style.transform = "translate(12.5%, 12.5%)";
-  x.src = "svg/x.svg";
+  x.src = assetPath + "x.svg";
   return x;
 }
 
@@ -219,7 +228,11 @@ Gallery.prototype.getImageAndShow = function() {
     img.src = thumbnailSource;
   }
   var captionText = this.images[this.state].dataset.caption;
-  this.captionElement.innerHTML = captionText;
+  if (captionText) {
+    this.captionElement.innerHTML = captionText;
+  } else {
+    this.captionElement.innerHTML = "";
+  }
   if (this.galleryElement.style.display != "block") {
     this.showSelf();
   }
