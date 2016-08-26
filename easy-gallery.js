@@ -7,9 +7,10 @@ var Gallery = function(className, imgurThumbnailFormat) {
   this.state = -1;
   this.galleryElement = false;
   this.imgElement = 0;
+  this.captionElement = 0;
   this.buttonSize = 30;
   this.imgurThumbnailFormat = imgurThumbnailFormat;
-  this.padding = "20px";
+  this.padding = "42px";
   this.smallWidth = "500px";
 
   // this.onclick = this.toggleOn()
@@ -76,6 +77,20 @@ Gallery.prototype.createSelf = function() {
   imageContainer.style.width = "100%";
   imageContainer.style.height = "100%";
   element.appendChild(imageContainer);
+
+  var caption = document.createElement('div');
+  caption.id = "gallery-caption";
+  caption.style.color = "#fff";
+  caption.style.fontFamily = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+  caption.style.padding = "2px";
+  caption.style.textAlign = "center";
+  caption.style.position = "absolute";
+  caption.style.bottom = "0";
+  caption.style.left = "0";
+  caption.style.width = "100%";
+  caption.style.height = "38px";
+  this.captionElement = caption;
+  element.appendChild(caption);
 
   this.imgElement = createImageElement();
   this.imgElement.id = "gallery-image-main";
@@ -203,6 +218,8 @@ Gallery.prototype.getImageAndShow = function() {
   } else {
     img.src = thumbnailSource;
   }
+  var captionText = this.images[this.state].dataset.caption;
+  this.captionElement.innerHTML = captionText;
   if (this.galleryElement.style.display != "block") {
     this.showSelf();
   }

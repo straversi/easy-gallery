@@ -1,7 +1,7 @@
 # easy-gallery
 A compact javascript library for creating an image gallery.
 
-Size: 3.7KB
+Size: 4.2KB
 
 The aim is extreme simplicity. To have a working gallery, include the script `easy-gallery-min.js`, give each image you want in a gallery a custom class, and include a single line of javascript to set everything up. That's it. It's not big, ugly, or in your way.
 
