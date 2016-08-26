@@ -5,6 +5,8 @@ Size: 4.2KB
 
 The aim is extreme simplicity. To have a working gallery, include the script `easy-gallery-min.js`, give each image you want in a gallery a custom class, and include a single line of javascript to set everything up. That's it. It's not big, ugly, or in your way.
 
+Compare this to PhotoSwipe, which is 54.0KB minified, and requires the developer to include ~20 lines of HTML and ~10 lines of JS to initialize a gallery.
+
 ## Usage
 
 The parameter `true` in the constructor specifies that I'm taking advantage of Imgur's url sizing format.
