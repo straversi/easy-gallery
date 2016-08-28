@@ -62,6 +62,7 @@ Gallery.prototype.createSelf = function() {
   element.className += "easy-gallery";
   element.id = "gallery-main";
   element.style.position = "fixed";
+  element.style.zIndex = "10";
   element.style.left = "0";
   element.style.top = "0";
   element.style.right = "0";
